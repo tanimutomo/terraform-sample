@@ -1,10 +1,10 @@
-module "http_sg" {
-  source      = "./security_group"
-  name        = "http-sg"
-  vpc_id      = aws_vpc.example.id
-  port        = 80
-  cidr_blocks = ["0.0.0.0/0"]
-}
+# module "http_sg" {
+#   source      = "./security_group"
+#   name        = "http-sg"
+#   vpc_id      = aws_vpc.example.id
+#   port        = 80
+#   cidr_blocks = ["0.0.0.0/0"]
+# }
 
 module "https_sg" {
   source      = "./security_group"
@@ -40,27 +40,27 @@ resource "aws_lb" "example" {
   }
 
   security_groups = [
-    module.http_sg.security_group_id,
+    # module.http_sg.security_group_id,
     module.https_sg.security_group_id,
     module.http_redirect_sg.security_group_id,
   ]
 }
 
-resource "aws_lb_listener" "http" {
-  load_balancer_arn = aws_lb.example.arn
-  port              = "80"
-  protocol          = "HTTP"
+# resource "aws_lb_listener" "http" {
+#   load_balancer_arn = aws_lb.example.arn
+#   port              = "80"
+#   protocol          = "HTTP"
 
-  default_action {
-    type = "fixed-response"
+#   default_action {
+#     type = "fixed-response"
 
-    fixed_response {
-      content_type = "text/plain"
-      message_body = "This is HTTP."
-      status_code  = "200"
-    }
-  }
-}
+#     fixed_response {
+#       content_type = "text/plain"
+#       message_body = "This is HTTP."
+#       status_code  = "200"
+#     }
+#   }
+# }
 
 resource "aws_lb_listener" "https" {
   load_balancer_arn = aws_lb.example.arn
@@ -82,8 +82,9 @@ resource "aws_lb_listener" "https" {
 
 resource "aws_lb_listener" "redirect_http_to_https" {
   load_balancer_arn = aws_lb.example.arn
-  port              = "8080"
-  protocol          = "HTTP"
+  # port              = "8080"
+  port     = "80"
+  protocol = "HTTP"
 
   default_action {
     type = "redirect"
