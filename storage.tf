@@ -36,7 +36,8 @@ resource "aws_s3_bucket" "public" {
 }
 
 resource "aws_s3_bucket" "alb_log" {
-  bucket = "tanimutomo.terraform-sample.alb-log"
+  bucket        = "tanimutomo.terraform-sample.alb-log"
+  force_destroy = true
 
   lifecycle_rule {
     enabled = true
