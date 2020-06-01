@@ -64,3 +64,14 @@ data "aws_iam_policy_document" "alb_log" {
     }
   }
 }
+
+resource "aws_s3_bucket" "artifact" {
+  bucket = "tanimutomo.terraform-sample.artifact"
+
+  lifecycle_rule {
+    enabled = true
+    expiration {
+      days = "180"
+    }
+  }
+}
