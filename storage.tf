@@ -66,7 +66,8 @@ data "aws_iam_policy_document" "alb_log" {
 }
 
 resource "aws_s3_bucket" "artifact" {
-  bucket = "tanimutomo.terraform-sample.artifact"
+  bucket        = "tanimutomo.terraform-sample.artifact"
+  force_destroy = true
 
   lifecycle_rule {
     enabled = true
